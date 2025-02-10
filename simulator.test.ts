@@ -1,10 +1,10 @@
 import { assertEquals } from "@std/assert/equals";
 import { firstClasses, ineffectiveClasses } from "./constants.ts";
-import { AND, NOT, checkSubStats } from "./utils.ts";
+import { AND, NOT, check } from "./utils.ts";
 
 Deno.test("checkSubStats", () => {
   assertEquals(
-    NOT(checkSubStats(ineffectiveClasses, 2))([
+    NOT(check(ineffectiveClasses, 2))([
       "ATK%",
       "EffectiveDMG",
       "IneffectiveDMG",
@@ -14,24 +14,24 @@ Deno.test("checkSubStats", () => {
 
   assertEquals(
     AND(
-      NOT(checkSubStats(ineffectiveClasses, 2)),
-      checkSubStats(firstClasses)
+      NOT(check(ineffectiveClasses, 2)),
+      check(firstClasses)
     )(["IneffectiveDMG", "IneffectiveDMG", "CritDmg"]),
     false
   );
 
   assertEquals(
     AND(
-      NOT(checkSubStats(ineffectiveClasses, 2)),
-      checkSubStats(firstClasses)
+      NOT(check(ineffectiveClasses, 2)),
+      check(firstClasses)
     )(["IneffectiveDMG", "ATK%", "EffectiveDMG"]),
     false
   );
 
   assertEquals(
     AND(
-      NOT(checkSubStats(ineffectiveClasses, 2)),
-      checkSubStats(firstClasses)
+      NOT(check(ineffectiveClasses, 2)),
+      check(firstClasses)
     )(["IneffectiveDMG", "ATK%", "CritDmg"]),
     true
   );

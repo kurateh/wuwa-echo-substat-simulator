@@ -4,7 +4,7 @@ import {
   secondClasses,
 } from "./constants.ts";
 import { simulator, SubStatAlgorithm } from "./simulator.ts";
-import { AND, checkSubStats, NOT, OR } from "./utils.ts";
+import { AND, check, NOT, OR } from "./utils.ts";
 
 /**
  * @FIXME
@@ -16,23 +16,32 @@ const algorithms: Record<string, SubStatAlgorithm> = {
     () => true,
     () => true,
     () => true,
-    AND(checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 1)),
+    AND(check(firstClasses, 2), check(secondClasses, 1)),
   ],
   "무지성 크크 유효2줄": [
     () => true,
     () => true,
     () => true,
     () => true,
-    AND(checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 2)),
+    AND(check(firstClasses, 2), check(secondClasses, 2)),
   ],
 
   /** @see https://arca.live/b/wutheringwaves/109124220 */
   "크크 유효2줄 최적화": [
-    checkSubStats([...firstClasses, ...secondClasses]),
-    OR(checkSubStats(firstClasses), checkSubStats(secondClasses, 2)),
-    NOT(checkSubStats(ineffectiveClasses, 2)),
-    NOT(checkSubStats([...secondClasses, ...ineffectiveClasses], 4)),
-    AND(checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 2)),
+    check([...firstClasses, ...secondClasses]),
+    OR(check(firstClasses), check(secondClasses, 2)),
+    NOT(check(ineffectiveClasses, 2)),
+    NOT(check([...secondClasses, ...ineffectiveClasses], 4)),
+    AND(check(firstClasses, 2), check(secondClasses, 2)),
+  ],
+
+  /** @see https://arca.live/b/wutheringwaves/110772941 */
+  "크크 유효2줄 최적화2": [
+    check([...firstClasses, ...secondClasses]),
+    OR(check(firstClasses), check(secondClasses, 2)),
+    AND(NOT(check(ineffectiveClasses, 2)), check(firstClasses)),
+    NOT(check([...secondClasses, ...ineffectiveClasses], 4)),
+    AND(check(firstClasses, 2), check(secondClasses, 2)),
   ],
 };
 

@@ -4,7 +4,7 @@ export const randomPick = (num: number) => Math.floor(Math.random() * num);
 
 type CheckFunction = (subStats: SubStat[]) => boolean;
 
-export const checkSubStats =
+export const check =
   (targetSubStats: SubStat[], count: number = 1): CheckFunction =>
   (subStats: SubStat[]) =>
     targetSubStats.reduce(
