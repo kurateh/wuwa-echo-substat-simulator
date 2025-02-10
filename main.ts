@@ -16,23 +16,23 @@ const algorithms: Record<string, SubStatAlgorithm> = {
     () => true,
     () => true,
     () => true,
-    AND([checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 1)]),
+    AND(checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 1)),
   ],
   "무지성 크크 유효2줄": [
     () => true,
     () => true,
     () => true,
     () => true,
-    AND([checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 2)]),
+    AND(checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 2)),
   ],
 
   /** @see https://arca.live/b/wutheringwaves/109124220 */
   "크크 유효2줄 최적화": [
     checkSubStats([...firstClasses, ...secondClasses]),
-    OR([checkSubStats(firstClasses), checkSubStats(secondClasses, 2)]),
+    OR(checkSubStats(firstClasses), checkSubStats(secondClasses, 2)),
     NOT(checkSubStats(ineffectiveClasses, 2)),
     NOT(checkSubStats([...secondClasses, ...ineffectiveClasses], 4)),
-    AND([checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 2)]),
+    AND(checkSubStats(firstClasses, 2), checkSubStats(secondClasses, 2)),
   ],
 };
 

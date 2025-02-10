@@ -14,12 +14,12 @@ export const checkSubStats =
     ) >= count;
 
 export const AND =
-  (checkFunctions: CheckFunction[]): CheckFunction =>
+  (...checkFunctions: CheckFunction[]): CheckFunction =>
   (subStats: SubStat[]) =>
     checkFunctions.every((checkFunction) => checkFunction(subStats));
 
 export const OR =
-  (checkFunctions: CheckFunction[]): CheckFunction =>
+  (...checkFunctions: CheckFunction[]): CheckFunction =>
   (subStats: SubStat[]) =>
     checkFunctions.some((checkFunction) => checkFunction(subStats));
 
