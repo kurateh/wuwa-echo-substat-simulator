@@ -27,7 +27,7 @@ const algorithms: Record<string, SubStatAlgorithm> = {
   ],
 
   /** @see https://arca.live/b/wutheringwaves/109124220 */
-  "대학원생 알고리즘 크크 유효2줄": [
+  "크크 유효2줄 최적화": [
     checkSubStats([...firstClasses, ...secondClasses]),
     OR([checkSubStats(firstClasses), checkSubStats(secondClasses, 2)]),
     NOT(checkSubStats(ineffectiveClasses, 2)),
