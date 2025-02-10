@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert/equals";
-import { firstClasses, ineffectiveClasses } from "./constants.ts";
+import { criticalStats, ineffectiveClasses } from "./constants.ts";
 import { AND, NOT, check } from "./utils.ts";
 
 Deno.test("checkSubStats", () => {
@@ -15,7 +15,7 @@ Deno.test("checkSubStats", () => {
   assertEquals(
     AND(
       NOT(check(ineffectiveClasses, 2)),
-      check(firstClasses)
+      check(criticalStats)
     )(["IneffectiveDMG", "IneffectiveDMG", "CritDmg"]),
     false
   );
@@ -23,7 +23,7 @@ Deno.test("checkSubStats", () => {
   assertEquals(
     AND(
       NOT(check(ineffectiveClasses, 2)),
-      check(firstClasses)
+      check(criticalStats)
     )(["IneffectiveDMG", "ATK%", "EffectiveDMG"]),
     false
   );
@@ -31,7 +31,7 @@ Deno.test("checkSubStats", () => {
   assertEquals(
     AND(
       NOT(check(ineffectiveClasses, 2)),
-      check(firstClasses)
+      check(criticalStats)
     )(["IneffectiveDMG", "ATK%", "CritDmg"]),
     true
   );
