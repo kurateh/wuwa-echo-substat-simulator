@@ -1,7 +1,13 @@
 import { spentExps, SubStat } from "./constants.ts";
 import { randomPick } from "./utils.ts";
 
-export type SubStatAlgorithm = ((subStats: SubStat[]) => boolean)[];
+export type SubStatAlgorithm = [
+  (subStats: SubStat[]) => boolean,
+  (subStats: SubStat[]) => boolean,
+  (subStats: SubStat[]) => boolean,
+  (subStats: SubStat[]) => boolean,
+  (subStats: SubStat[]) => boolean
+];
 
 export const simulator = (
   algorithm: SubStatAlgorithm,
@@ -102,5 +108,13 @@ export const simulator = (
     tunerCountAvg:
       tunerCountResults.reduce((a, b) => a + b, 0) / tunerCountResults.length,
     expAvg: expResults.reduce((a, b) => a + b, 0) / expResults.length,
+    tunerEchoYield:
+      echoCountResults
+        .map((v, i) => 1 / v / tunerCountResults[i])
+        .reduce((a, b) => a + b, 0) / echoCountResults.length,
+    tunerExpRatio:
+      expResults
+        .map((v, i) => v / tunerCountResults[i])
+        .reduce((a, b) => a + b, 0) / expResults.length,
   };
 };
