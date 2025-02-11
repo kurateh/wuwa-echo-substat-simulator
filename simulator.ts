@@ -14,11 +14,15 @@ export const simulator = (
   options?: {
     simulationCount?: number;
     onlyAcceptBestOptionWithATK?: boolean;
+    excludeMinCritCritDmg?: boolean;
   }
 ) => {
   type State = { echoCount: number; tunerCount: number; exp: number };
-  const { simulationCount = 100000, onlyAcceptBestOptionWithATK = false } =
-    options ?? {};
+  const {
+    simulationCount = 100000,
+    onlyAcceptBestOptionWithATK = false,
+    excludeMinCritCritDmg = false,
+  } = options ?? {};
 
   const echoCountResults: number[] = [];
   const tunerCountResults: number[] = [];
@@ -55,7 +59,15 @@ export const simulator = (
       let success = true;
       let spentExp = 0;
       let spentTuner = 0;
+      let passedCritCondition = false;
       initialize();
+
+      const getRefund = () => {
+        // 환급
+        currentState.exp -= spentExp * 0.75;
+        currentState.tunerCount -= spentTuner * 0.3;
+        // console.log(`폐기된 에코 옵션: ${subStats.join(", ")}`);
+      };
 
       // 에코 하나 강화 시작
       currentState.echoCount++;
@@ -81,10 +93,25 @@ export const simulator = (
           success = false;
 
           // 선환급
-          currentState.exp -= spentExp * 0.75;
-          currentState.tunerCount -= spentTuner * 0.3;
-          // console.log(`폐기된 에코 옵션: ${subStats.join(", ")}`);
+          getRefund();
           break;
+        }
+
+        if (excludeMinCritCritDmg && !passedCritCondition) {
+          if (
+            subStats.filter((v) => v === "CritDmg" || v === "CritRate")
+              .length >= 2
+          ) {
+            if (Math.random() > 1 - 0.0733 * 0.0733) {
+              success = false;
+
+              // 선환급
+              getRefund();
+              break;
+            }
+
+            passedCritCondition = true;
+          }
         }
       }
 

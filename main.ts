@@ -60,6 +60,16 @@ const algorithms: Record<string, SubStatAlgorithm> = {
     ),
     AND(check(criticalStats, 2), check(effectiveStats, 1)),
   ],
+  "크크+1줄 / 2줄에 크리 1줄, 이후 불가능하지 않으면 계속 도전": [
+    () => true,
+    check([...criticalStats]),
+    () => true,
+    OR(
+      check(criticalStats, 2),
+      AND(check(criticalStats, 1), check(effectiveStats, 1))
+    ),
+    AND(check(criticalStats, 2), check(effectiveStats, 1)),
+  ],
 
   "크크+2줄 / 무지성": [
     () => true,
@@ -184,8 +194,9 @@ Object.entries(algorithms).forEach(([name, algorithm]) => {
        * 기준인 60은 https://arca.live/b/wutheringwaves/110955224을 참고
        *
        */
-      simulationCount: 100000,
+      simulationCount: 1000000,
       onlyAcceptBestOptionWithATK: false,
+      excludeMinCritCritDmg: true,
     });
 
   const record: (typeof rows)[number] = {
@@ -206,4 +217,4 @@ const worksheet = XLSX.utils.json_to_sheet(rows);
 const workbook = XLSX.utils.book_new();
 XLSX.utils.book_append_sheet(workbook, worksheet, "시뮬레이션 결과");
 
-// XLSX.writeFile(workbook, "시뮬레이션 결과.xlsx");
+XLSX.writeFile(workbook, "시뮬레이션 결과.xlsx");
