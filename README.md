@@ -7,7 +7,7 @@
 
 ## Usage
 ```sh
-deno run main.ts --allow-write
+deno --allow-write main.ts
 ```
 
 ### `main.ts`
