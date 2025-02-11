@@ -143,5 +143,11 @@ export const simulator = (
       expResults
         .map((v, i) => v / tunerCountResults[i])
         .reduce((a, b) => a + b, 0) / expResults.length,
+    bottom10PercentEchoCount: echoCountResults.sort((a, b) => a - b)[
+      Math.floor(echoCountResults.length * 0.9)
+    ],
+    bottom10PercentTunerCount: tunerCountResults.sort((a, b) => a - b)[
+      Math.floor(tunerCountResults.length * 0.9)
+    ],
   };
 };
